@@ -1,7 +1,9 @@
 #include <cstring>
 #include <iostream>
 
-class Cd
+#include "dynamic_string_allocator.hpp"
+
+class Cd: public DynamicStringAllocator
 {
 private:
     char* performers;
@@ -9,16 +11,12 @@ private:
     int selections;
     double playtime;
 
-    void _allocateString(char* ptr, const char* str);
-    void _freeAllocatedString(char* ptr);
-    void _freeAllocatedMemory();
+    void _freeAllocatedMemory() override;
 public:
     Cd(const char* performers, const char* label, int selections, double playtime);
     Cd(const Cd& cd);
     Cd();
-    
     ~Cd();
-    void report();
     Cd& operator=(const Cd& cd);
+    virtual void report();
 };
-
