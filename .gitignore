@@ -7,6 +7,8 @@
 output
 
 ### VisualStudio ###
+.vs/
+
 # User-specific files
 *.rsuser
 *.suo
