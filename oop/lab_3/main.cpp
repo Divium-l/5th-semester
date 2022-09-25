@@ -15,7 +15,6 @@ int main() {
     cout << "Max double = " << maxn<>(doubleArray, 4) << endl;
     cout << "Longest string = " << maxn(charPtrArray, 5) << endl;
 
-
     return EXIT_SUCCESS;
 }
 
