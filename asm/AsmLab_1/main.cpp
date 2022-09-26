@@ -4,14 +4,6 @@
 #include<sstream>
 
 using namespace std;
-const int DataSize = 144;
-
-std::string IntToHex(int n)
-{
-	std::stringstream ss;
-	ss << std::hex << n;
-	return ss.str();
-}
 
 /*
 4 247 776 274
@@ -27,16 +19,20 @@ std::string IntToHex(int n)
 // ESP, EBP - БАН
 int main()
 {
-	unsigned char Memo[DataSize];
-	for (int i = 0; i++; i < DataSize) {
-		Memo[i] = NULL;
-	}
-	int data;
+	unsigned int data = 0;
+	char32_t a = 4247776274;	// ESI
+	char32_t b = 103373407;		// EDI
+	char16_t c = 46130;			// BX	(EBX)
+	char16_t d = 29961;			// CX	(ECX)
+	char e = 151;				// DH	(EDX)
+	char f = 56;				// DL	(EDX)
 	__asm {
 		pushad
 
-		MOV ESI, 4247776274
-		MOV EDI, 103373407
+		LEA EAX, a
+		MOV ESI, [EAX]
+		LEA EAX, b
+		MOV EDI, [EAX]
 		// 1-й способ
 		XCHG ESI, EDI
 		// 2-й способ
@@ -45,7 +41,8 @@ int main()
 		MOV EDI, EAX
 		// 3-й способ
 		PUSH ESI
-		MOV ESI, EDI
+		PUSH EDI
+		POP ESI
 		POP EDI
 		// 4-й способ
 		LEA EAX, data
@@ -54,9 +51,10 @@ int main()
 		MOV EDI, [EAX]
 
 
-		MOV EBX, 0
-		MOV BX, 46130
-		MOV CX, 29961
+		LEA EAX, c
+		MOV BX, [EAX]
+		LEA EAX, d
+		MOV CX, [EAX]
 		// 1
 		XCHG BX, CX
 		// 2
@@ -65,7 +63,8 @@ int main()
 		MOV CX, AX
 		// 3
 		PUSH BX
-		MOV BX, CX
+		PUSH CX
+		POP BX
 		POP CX
 		// 4
 		LEA EAX, data
@@ -74,8 +73,10 @@ int main()
 		MOV CX, [EAX]
 
 
-		MOV DH, 151
-		MOV DL, 56
+		LEA EAX, e
+		MOV DH, [EAX]
+		LEA EAX, f
+		MOV DL, [EAX]
 		// 1
 		XCHG DH, DL
 		// 2
@@ -93,20 +94,17 @@ int main()
 		MOV DH, DL
 		MOV DL, [EAX]
 
-		// ????
+
+		// Без потери знака
 		MOVSX AX, DH
-		MOVSX EBX, DH
+		MOVSX BX, DL
+		// Расширенные нулём
+		MOVZX ECX, DH
+		MOVZX EDX, DL
 
 		popad
 	}
-	for (int i = 0; i < DataSize; i++) {
-		if ((i % 16) == 0) {
-			cout << "\n" << setw(2) << i / 16 << ":";
-		}
-		else {
-			cout << " " << setw(2) << IntToHex(Memo[i - 1]);
-		}
-	}
+
 	_getch();
 	return 0;
 }
