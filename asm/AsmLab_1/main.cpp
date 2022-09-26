@@ -31,39 +31,71 @@ int main()
 	for (int i = 0; i++; i < DataSize) {
 		Memo[i] = NULL;
 	}
+	int data;
 	__asm {
 		pushad
 
 		MOV ESI, 4247776274
-		MOV EBX, 103373407
+		MOV EDI, 103373407
 		// 1-й способ
-		XCHG ESI, EBX
+		XCHG ESI, EDI
 		// 2-й способ
-		MOV EDI, ESI
-		MOV ESI, EBX
-		MOV EBX, EDI
+		MOV EAX, ESI
+		MOV ESI, EDI
+		MOV EDI, EAX
 		// 3-й способ
 		PUSH ESI
-		MOV ESI, EBX
-		POP EBX
+		MOV ESI, EDI
+		POP EDI
+		// 4-й способ
+		LEA EAX, data
+		MOV [EAX], ESI
+		MOV ESI, EDI
+		MOV EDI, [EAX]
 
 
-		MOV CX, 46130
-		MOV DX, 29961
+		MOV EBX, 0
+		MOV BX, 46130
+		MOV CX, 29961
 		// 1
-		XCHG CX, DX
+		XCHG BX, CX
 		// 2
-		MOV DI, CX
-		MOV CX, DX
-		MOV DX, DI
+		MOV AX, BX
+		MOV BX, CX
+		MOV CX, AX
 		// 3
-		PUSH CX
-		MOV CX, DX
-		POP DX
+		PUSH BX
+		MOV BX, CX
+		POP CX
+		// 4
+		LEA EAX, data
+		MOV [EAX], BX
+		MOV BX, CX
+		MOV CX, [EAX]
 
 
-		MOV AL, 151
-		MOV AH, 56
+		MOV DH, 151
+		MOV DL, 56
+		// 1
+		XCHG DH, DL
+		// 2
+		MOV AL, DH
+		MOV DH, DL
+		MOV DL, AL
+		// 3
+		PUSH DX
+		MOV DH, DL
+		POP AX
+		MOV DL, AH
+		// 4
+		LEA EAX, data
+		MOV [EAX], DH
+		MOV DH, DL
+		MOV DL, [EAX]
+
+		// ????
+		MOVSX AX, DH
+		MOVSX EBX, DH
 
 		popad
 	}
