@@ -3,7 +3,7 @@
 
 ```c++
 typedef std::valarray<int> Arrayint; 
-typedef std::air<Arrayint, Arrayint> PairArray;
+typedef std::pair<Arrayint, Arrayint> PairArray;
 ```
 
 Реализуйте класс Wine, используя включение. Этот класс должен иметь конструктор по умолчанию и, как минимум, следующие конструкторы:
