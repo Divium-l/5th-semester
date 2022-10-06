@@ -26,7 +26,11 @@ Classic& Classic::operator=(const Classic& classic) {
         return *this;
 
     _freeAllocatedMemory();
+    _freeAllocatedString(label);
+    _freeAllocatedString(performers);
     _allocateString(mainTrack, classic.mainTrack);
+    _allocateString(performers, classic.performers);
+    _allocateString(label, classic.label);
     return *this;
 }
 

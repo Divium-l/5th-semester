@@ -6,12 +6,14 @@
 class Cd: public DynamicStringAllocator
 {
 private:
-    char* performers;
-    char* label;
     int selections;
     double playtime;
 
+protected:
+    char* performers;
+    char* label;
     void _freeAllocatedMemory() override;
+    
 public:
     Cd(const char* performers, const char* label, int selections, double playtime);
     Cd(const Cd& cd);

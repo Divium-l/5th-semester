@@ -2,10 +2,10 @@
 #include "cd.hpp"
 
 class Classic: public Cd {
-private:
+protected:
     char* mainTrack;
-
     void _freeAllocatedMemory() override;
+
 public:
     Classic();
     Classic(const char* mainTrack, const char* performers, 
