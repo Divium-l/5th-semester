@@ -21,6 +21,7 @@ int main() {
 	}
 
 	// ((25/c) - d + 2)/(b + a^2 - 1) 
+	// (c - d + 2)/(b + a - 1) 
 	long long a = 0x1'527D'27F2; //5'678'901'234;
 	long long b = 0x1'94A8'1B79; //6'789'012'345;
 	long long c = 0x1'D649'BAC0; //7'890'123'456;
@@ -31,25 +32,33 @@ int main() {
 	
 	__asm {
 		pushad
-
-		MOV ECX, 0xD649'BAC0
+		// EDX:EAX - ECX:EBX + 2 = EDX:EAX
+		// c
+		MOV EDX, 0xD649'BAC0
 		MOV EAX, 0x1
-		MOV EDX, 0x128E'0F87
+		// d
+		MOV ECX, 0x128E'0F87
 		MOV EBX, 0x2
-
-		SUB ECX, EDX
+		// c - d
+		SUB EDX, ECX
 		SBB EAX, EBX
-		ADD ECX, 2
+		// c - d + 2
+		SUB EDX, 2
+		SBB EAX, 0
 
+		// EBX:EDI + EDX:ESI - 1 = EBX:EDI
+		// b
 		MOV EBX, 0x94A8'1B79
-		MOV EAX, 0x1
+		MOV EDI, 0x1
+		// a
 		MOV EDX, 0x527D'27F2
 		MOV ESI, 0x1
-
+		// a + b
 		ADD EBX, EDX
-		ADC EAX, ESI
-
-		
+		ADC EDI, ESI
+		// a + b - 1
+		SUB EBX, 1
+		SBB EDI, 0
 
 		popad
 	}
