@@ -65,7 +65,16 @@ int main() {
 		ADD EDI, 2
 		JMP even_odd_exit
 	even_odd_exit:
-
+		// if (a >= 50_000)
+		CMP EAX, 50'000
+		JLE a
+		// if (a < 10_000)
+		CMP EAX, 10'000
+	greater_than_50000:
+		MOV [EBX], EAX
+		ADD EBX, 2
+		JMP greater_less_exit
+	greater_less_exit:
 		LOOP loop_start
 		popad
 	}
