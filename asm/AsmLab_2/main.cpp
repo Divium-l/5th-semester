@@ -69,7 +69,6 @@ int main() {
 		* EDX:EAX = -1'011'111'109 = 0xFFFF'FFFF'C3BB'AB3B
 		* EBX:EDI = 12'467'913'578 = 0X0000'0002'E725'436A
 		**/
-		 
 
 		popad
 	}
