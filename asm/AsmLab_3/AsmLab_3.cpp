@@ -1,24 +1,30 @@
-﻿#include<iostream>
-#include<conio.h>
-#include<iomanip>
-#include<sstream>
+﻿#include <iostream>
+#include <conio.h>
+#include <iomanip>
+#include <sstream>
+#include <string>
+#include <random>
 
-using namespace std;
-
-const int DataSize = 512;
+const int DATA_SIZE = 512;
 
 uint16_t random() {
-	return 0xFFFF;
+	std::random_device rd;     
+	std::mt19937 rng(rd());    
+	std::uniform_int_distribution<uint16_t> uni(0, 0xFFFF);
+
+	auto a = uni(rng);
+	return a;
+	//return rand() % 0xFFFF;
+	//return 50002;
+	//return 9999;
 }
 
 int main() {
-	uint16_t Memo[DataSize];
+	uint16_t arr[DATA_SIZE];
 
-	for (int i = 0; i < DataSize; i++) {
-		Memo[i] = 0;
+	for (int i = 0; i < DATA_SIZE; i++) {
+		arr[i] = 0;
 	}
-
-	cout << &Memo << endl;
 
 	srand(time(0));
 
@@ -27,67 +33,105 @@ int main() {
 
 		// EDI - счётчик нечётных
 		// ESI - счётчик чётных
-		// EBX - счётчик чисел, >= 50_000
-		// EDX - счётчик чисел, < 10_000
-		LEA EDI, Memo
+		// ECX - счётчик чисел, >= 50_000
+		// EBX - счётчик чисел, < 10_000
+		LEA EDI, arr
 
 		MOV ESI, EDI
 		ADD ESI, 256
 
-		MOV EBP, ESI
-		ADD EBP, 256
+		MOV ECX, ESI
+		ADD ECX, 256
 
-		MOV EDX, EBP
-		ADD EDX, 256
-
-		MOV ECX, 2
-
+		MOV EBX, ECX
+		ADD EBX, 256
 	loop_start:
-		// if (a % 2 == 0)
 		PUSH ECX
 		CALL random
-		POP ECX
+		MOVZX EAX, AX
 		PUSH EAX
+		// if (a % 2 == 0)
 		CDQ
-		MOV EBX, 2
-		DIV EBX
+		MOV ECX, 2
+		DIV ECX
 		CMP EDX, 0
+		POP EAX
+		POP ECX
 		JNZ is_even
 		JMP is_odd
 	is_even:
-		POP EAX
 		MOV [ESI], EAX
 		ADD ESI, 2
 		JMP even_odd_exit
 	is_odd:
-		POP EAX
 		MOV [EDI], EAX
 		ADD EDI, 2
 		JMP even_odd_exit
 	even_odd_exit:
+
 		// if (a >= 50_000)
-		CMP EAX, 50'000
-		JLE a
+		CMP EAX, 50000
+		JGE greater
 		// if (a < 10_000)
-		CMP EAX, 10'000
-	greater_than_50000:
+		CMP EAX, 10000
+		JL less
+		JMP greater_less_exit
+	greater:
+		MOV [ECX], EAX
+		ADD ECX, 2
+		JMP greater_less_exit
+	less:
 		MOV [EBX], EAX
 		ADD EBX, 2
 		JMP greater_less_exit
 	greater_less_exit:
-		LOOP loop_start
+		LEA EAX, arr
+		ADD EAX, 256
+		CMP EDI, EAX
+		JGE loop_exit
+		
+		ADD EAX, 256
+		CMP ESI, EAX
+		JGE loop_exit
+
+		ADD EAX, 256
+		CMP ECX, EAX
+		JGE loop_exit
+
+		ADD EAX, 256
+		CMP EBX, EAX
+		JGE loop_exit
+		JMP loop_start
+	loop_exit:
+
 		popad
 	}
 
-	for (int i = 0; i < DataSize; i++) {
+	for (int i = 0; i < DATA_SIZE; i++) {
 		if ((i % 128) == 0) {
-			cout << "\n" << i / 128 << ":";
+			std::string groupName;
+			switch (i / 128) {
+				case 0:
+					groupName = "even";
+					break;
+				case 1:
+					groupName = "odd";
+					break;
+				case 2:
+					groupName = ">= 50_000";
+					break;
+				case 3:
+					groupName = "< 10_000";
+					break;
+				default:
+					groupName = "unknown condition";
+			}
+			std::cout << std::endl << std::setw(9) << groupName << ":";
 		}
-		else {
-			cout << " " << Memo[i - 1];
-		}
+		else
+			std::cout << " " << arr[i - 1];
 	}
 
-	_getch();
+	//_getch();
 	return 0;
 }
