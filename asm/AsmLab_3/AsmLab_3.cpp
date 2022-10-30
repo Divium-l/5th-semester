@@ -24,8 +24,6 @@ int main() {
 		arr[i] = 0;
 	}
 
-	srand(time(0));
-
 	__asm {
 		pushad
 
@@ -86,7 +84,7 @@ int main() {
 	greater_less_exit:
 
 		LEA EAX, arr
-		ADD EAX, 256
+		ADD EAX, 254	// [0..127]
 		CMP EDI, EAX
 		JGE loop_exit
 		
