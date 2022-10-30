@@ -6,17 +6,15 @@
 #include <random>
 
 const int DATA_SIZE = 512;
+const uint16_t MIN = 0x0;
+const uint16_t MAX = 0xFFFF;
 
 uint16_t random() {
 	std::random_device rd;     
 	std::mt19937 rng(rd());    
-	std::uniform_int_distribution<uint16_t> uni(0, 0xFFFF);
+	std::uniform_int_distribution<uint16_t> uni(MIN, MAX);
 
-	auto a = uni(rng);
-	return a;
-	//return rand() % 0xFFFF;
-	//return 50002;
-	//return 9999;
+	return uni(rng);
 }
 
 int main() {
@@ -46,6 +44,7 @@ int main() {
 		MOV EBX, ECX
 		ADD EBX, 256
 	loop_start:
+		// EAX = random()
 		PUSH ECX
 		CALL random
 		MOVZX EAX, AX
@@ -85,6 +84,7 @@ int main() {
 		ADD EBX, 2
 		JMP greater_less_exit
 	greater_less_exit:
+
 		LEA EAX, arr
 		ADD EAX, 256
 		CMP EDI, EAX
@@ -132,6 +132,6 @@ int main() {
 			std::cout << " " << arr[i - 1];
 	}
 
-	//_getch();
+	_getch();
 	return 0;
 }
