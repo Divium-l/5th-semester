@@ -1,35 +1,22 @@
+#pragma once
+
 #include <vector>
+#include <ctime>
 #include "session.hpp"
 
-class Cinema {
+class Cinema
+{
 private:
     std::vector<Session> sessions;
 
 public:
-    Cinema() : sessions() {}
-    Cinema(const std::vector<Session> &sessions) : sessions(sessions) {}
+    Cinema();
+    Cinema(const std::vector<Session> &sessions);
 
-    void addSession(const Session &session) {
-        sessions.push_back(session);
-    }
+    void addSession(const Session &session);
 
-    void removeSessionBySessionNumber(const int sessionNumber) {
-        auto iterator = sessions.begin();
+    void removeSessionBySessionNumber(const int sessionNumber);
 
-        for (Session session : sessions) {
-            if (session.getSessionNumber() == sessionNumber)
-                break;
-            iterator++;
-        }
-
-        sessions.erase(iterator);
-    }
-
-    std::vector<Session> getActiveSessions() {
-        std::vector<Session> activeSessions();
-
-        for (Session session : sessions) {
-            auto time = session.getSessionTime();
-        }
-    }
+    std::vector<Session> getActiveSessions() const;
+    std::vector<Session> getAllSessions() const;
 };

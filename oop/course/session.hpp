@@ -1,25 +1,9 @@
+#pragma once
+
 #include <string>
 #include <sstream>
 #include <iomanip>
-
-struct SessionTime {
-    time_t start;
-    time_t end;
-
-    SessionTime() : start(0), end(0) {}
-    SessionTime(time_t start, time_t end) : start(start), end(end) {}
-
-    std::string toString() {
-        std::stringstream stream;
-
-        stream << "{"
-            << "Start: " << start << ", "
-            << "End: " << end
-            << "}";
-
-        return stream.str();
-    }
-};
+#include "time_range.hpp"
 
 class Session {
 private:
@@ -27,38 +11,23 @@ private:
     int hallNumber;
     std::string movieName;
     double ticketPrice;
-    SessionTime sessionTime;
+    TimeRange sessionTime;
 
 public:
     Session(const int sessionNumber, const int hallNumber, const std::string &movieName,
-        const double ticketPrice, const SessionTime &sessionTime) {
-        this->sessionNumber = sessionNumber;
-        this->hallNumber = hallNumber;
-        this->movieName = movieName;
-        this->ticketPrice = ticketPrice;
-        this->sessionTime = sessionTime;
-    }
+        const double ticketPrice, const TimeRange &sessionTime);
 
-    std::string toString() const {
-        std::stringstream stream;
+    std::string toString() const;
 
-        stream << "{" 
-            << "Session Number: " << sessionNumber << ", "
-            << "Hall Number: " << hallNumber << ", "
-            << "Movie Name: " << movieName << ", "
-            << "Ticket Price: " << std::fixed << std::setprecision(2) << ticketPrice << ", "
-            << "Session Number: " << sessionNumber << ", "
-            << "Time: " << sessionTime.toString()
-            << "}";
+    int getSessionNumber() const;
+    int getHallNumber() const;
+    std::string getMovieName() const;
+    double getTicketPrice() const;
+    TimeRange getTimeRange() const;
 
-        return stream.str();
-    } 
-
-    int getSessionNumber() const {
-        return sessionNumber;
-    }
-
-    SessionTime getSessionTime() const {
-        return sessionTime;
-    }
+    void setSessionNumber(const int sessionNumber);
+    void setHallNumber(const int hallNumber);
+    void setMovieName(const std::string &moviName);
+    void setTicketPrice(const double ticketPrice);
+    void setTimeRange(const TimeRange &sessionTime);
 };
