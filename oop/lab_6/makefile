@@ -1,21 +1,25 @@
-OBJECTS = main.o tv.o remote.o tv_exception.o
-CC = g++
-CFLAGS = -std=c++2a
+NAME = control
 
-all: $(OBJECTS)
-	$(CC) $(OBJECTS) -o output
+CC = clang++ 
 
-main.o: main.cpp
-	$(CC) $(CFLAGS) -c main.cpp
+# CFLAGS = -Wall -Wextra -Werror
 
-tv.o: tv.hpp tv.cpp
-	$(CC) $(CFLAGS) -c tv.cpp
+SRCS = main.cpp tv.cpp remote.cpp tv_exception.cpp
 
-remote.o: remote.hpp remote.cpp
-	$(CC) $(CFLAGS) -c remote.cpp
+HEAD = Remote.hpp Tv.hpp
 
-tv_exception.o: tv_exception.hpp tv_exception.cpp
-	$(CC) $(CFLAGS) -c tv_exception.cpp
+OBJS = $(SRCS:.c = .o)
 
-clean:
-	rm *.o output
+$(NAME) : $(OBJS) $(HEAD)
+		$(CC) $(CFLAGS) $(OBJS) -o $(NAME)
+
+%.c:%.o 
+	$(CC) -c $< -o $@
+
+all: $(NAME)
+
+fclean: clean
+	rm -rf $(NAME)
+
+clean: 
+	rm -rf $(NAME)

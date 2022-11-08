@@ -1,7 +1,7 @@
+#include "tv.hpp"
+#include "remote.hpp"
 #include <iostream>
 #include <stdexcept>
-#include "remote.hpp"
-#include "tv.hpp"
 
 using namespace std;
 

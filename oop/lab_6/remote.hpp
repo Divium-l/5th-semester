@@ -1,28 +1,27 @@
 #pragma once
 
-#include <iostream>
 #include "tv.hpp"
 
-class Remote {
-    public:
-        friend class Tv;
-        enum RemoteMode {
-            NORMAL, 
-            INTERACTIVE
-        };
+class Tv;
 
-   private:
-        int mode;
-        RemoteMode remoteMode;
+class Remote {
 
    public:
-        Remote(int m = Tv::TV): mode(m) {}
-        bool volup(Tv& t) {return t.volup();}
-        bool voldown(Tv& t) {return t.voldown();}
-        void onoff(Tv& t) {t.onoff();}
-        void channelup(Tv& t) {t.channelup();}
-        void channeldown(Tv& t) {t.channeldown();}
-        void set_channel(Tv& t,int ch) {t.channel=ch;}
-        void set_mode(Tv& t) {t.set_mode();}
-        void showMode() const;
+		enum RemoteMode {
+				NORMAL, 
+				INTERACTIVE
+			};
+		Remote(): mode(0) {};
+		bool volup(Tv t);
+		bool voldown(Tv t);
+		void onoff(Tv t);
+		void channelup(Tv t);
+		void channeldown(Tv t);
+		void set_channel(Tv t,int ch);
+		void set_mode(Tv t);
+		void showMode() const;
+   private:
+		friend class Tv;
+		int mode;
+		RemoteMode remoteMode;
 };
