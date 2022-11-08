@@ -1,4 +1,4 @@
-OBJECTS = main.o
+OBJECTS = main.o review.o
 CC = g++
 CFLAGS = -std=c++2a
 
@@ -7,6 +7,9 @@ all: $(OBJECTS)
 
 main.o: main.cpp
 	$(CC) $(CFLAGS) -c main.cpp
+
+review.o: review.hpp review.cpp
+	$(CC) $(CFLAGS) -c review.cpp
 
 clean:
 	rm *.o output
