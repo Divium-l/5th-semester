@@ -13,7 +13,6 @@ int main() {
         Tv SamsungTV;
         cout<<"Initialisation settings:"<<endl;
         SamsungTV.settings();
-        SamsungTV.onoff();
         SamsungTV.channelup();
         SamsungTV.volup();
         SamsungTV.volup();
@@ -25,7 +24,9 @@ int main() {
         whiteRemote.volup(SamsungTV);
         whiteRemote.volup(SamsungTV);
         cout<<endl<<"new remote settings:"<<endl;
-        SamsungTV.settings();        
+        SamsungTV.settings();       
+        SamsungTV.onoff(); 
+        SamsungTV.settings();
     }
     catch (logic_error e) {
         cout << e.what() << endl;
