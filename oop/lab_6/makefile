@@ -18,8 +18,7 @@ $(NAME) : $(OBJS) $(HEAD)
 
 all: $(NAME)
 
-fclean: clean
-	rm -rf $(NAME)
-
 clean: 
 	rm -rf $(NAME)
+
+re: clean all

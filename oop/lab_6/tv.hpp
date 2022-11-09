@@ -20,7 +20,7 @@ class Tv {
 		enum {MinVal, MaxVal = 20};
 		enum {TV, DVD};
 
-		Tv(): state(Off),volume(5),channel(1), mode(TV),maxChannel(125) {};
+		Tv(): state(On),volume(5),channel(1), mode(TV),maxChannel(125) {};
 		
 		void onoff() {state ^= On;};
 		bool ison() const {return state == On;};
