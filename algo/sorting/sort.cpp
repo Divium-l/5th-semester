@@ -6,6 +6,31 @@ namespace sort {
             a = b;
             b = temp;
         }
+
+        void _qsort(int* array, int low, int high) {
+            int i = low;
+            int j = high;
+            int pivot = array[(i + j) / 2];
+
+            while (i < j) {
+                while (array[i] < pivot)
+                    i++;
+                while (array[j] > pivot)
+                    j--;
+
+                if (i <= j) {
+                    swap(array[i], array[j]);
+                    i++;
+                    j--;
+                }
+            }
+
+            if (j > low)
+                _qsort(array, low, j);
+
+            if (i < high)
+                _qsort(array, i, high);
+        }
     }
 
     void bsort(int* array, const unsigned long size) {
@@ -15,7 +40,7 @@ namespace sort {
                     swap(array[i], array[j]);
     }
 
-    void qsort(const int* array, const unsigned long size) {
-        //do nothing
+    void qsort(int* array, const unsigned long size) {
+	    _qsort(array, 0, size - 1);
     }
 }
