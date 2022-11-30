@@ -1,16 +1,15 @@
 namespace sort {
-
     namespace {
-        void swap(int &a, int &b) {
-            int temp = a;
+        template<typename T> void swap(T &a, T &b) {
+            T temp = a;
             a = b;
             b = temp;
         }
 
-        void _qsort(int* array, int low, int high) {
+        template<typename T> void _qsort(T* array, int low, int high) {
             int i = low;
             int j = high;
-            int pivot = array[(i + j) / 2];
+            T pivot = array[(i + j) / 2];
 
             while (i < j) {
                 while (array[i] < pivot)
@@ -33,14 +32,14 @@ namespace sort {
         }
     }
 
-    void bsort(int* array, const unsigned long size) {
+    template<typename T> void bsort(T* array, const unsigned long size) {
         for (int i = 0; i < size; i++)
             for (int j = i + 1; j < size; j++)
                 if (array[i] > array[j])
                     swap(array[i], array[j]);
     }
 
-    void qsort(int* array, const unsigned long size) {
+    template<typename T> void qsort(T* array, const unsigned long size) {
 	    _qsort(array, 0, size - 1);
     }
 }

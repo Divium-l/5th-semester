@@ -1,4 +1,6 @@
 namespace sort {
-    void bsort(int* array, const unsigned long size);
-    void qsort(int* array, const unsigned long size);
+    template<typename T> void bsort(T* array, const unsigned long size);
+    template<typename T> void qsort(T* array, const unsigned long size);
 }
+
+#include "sort.cpp"
