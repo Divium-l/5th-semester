@@ -12,7 +12,7 @@ void printArray(const int* array, const size_t size);
 void randomizeArray(int* array, const size_t size);
 void copyArray(int* to, const int* from, const size_t size);
 
-const unsigned int SIZE = 1'000;
+const unsigned int SIZE = 10'000;
 int random_b[SIZE];
 int random_q[SIZE];
 int sorted_b[SIZE];
@@ -26,7 +26,7 @@ void testSort(int* array, void (*sort)(int*, const unsigned long) ,std::string a
     auto end = std::chrono::system_clock::now();
     auto elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
     std::cout << "Sorting comlete. " << elapsed.count() << "ms elapsed" << std::endl;
-    std::cout << iterations << " iterations." << std::endl << std::endl;
+    std::cout << iterations << " swaps." << std::endl << std::endl;
 }
 
 int main() {
@@ -39,16 +39,16 @@ int main() {
     copyArray(random_q, random_b, SIZE);
 
     // Quick sort | random array
-    testSort(random_q, sort::qsort, "random", "quick sort", sort::qIterations);
+    testSort(random_q, sort::qsort, "random", "quick sort", sort::qSwaps);
 
     // Quick sort | sorted array
-    testSort(sorted_q, sort::qsort, "sorted", "quick sort", sort::qIterations);
+    testSort(sorted_q, sort::qsort, "sorted", "quick sort", sort::qSwaps);
 
     // Bubble sort | random array
-    testSort(random_b, sort::bsort, "random", "buuble sort", sort::bIterations);
+    testSort(random_b, sort::bsort, "random", "buuble sort", sort::bSwaps);
 
     // Bubble sort | sorted array
-    testSort(sorted_b, sort::bsort, "sorted", "buuble sort", sort::bIterations);
+    testSort(sorted_b, sort::bsort, "sorted", "buuble sort", sort::bSwaps);
 
 }
 
