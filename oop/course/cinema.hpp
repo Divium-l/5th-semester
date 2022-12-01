@@ -2,10 +2,10 @@
 
 #include <vector>
 #include <ctime>
+#include <fstream>
 #include "session.hpp"
 
-class Cinema
-{
+class Cinema {
 private:
     std::vector<Session> sessions;
 
@@ -19,4 +19,7 @@ public:
 
     std::vector<Session> getActiveSessions() const;
     std::vector<Session> getAllSessions() const;
+
+    void serialize(std::string path) const;
+    void deserialize(std::string path);
 };

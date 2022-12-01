@@ -12,8 +12,8 @@ struct TimeRange {
     static const u64 DAY = HOUR * 24;
     static const u64 WEEK = DAY * 7;
 
-    const time_t start;
-    const time_t end;
+    time_t start;
+    time_t end;
 
     TimeRange();
     TimeRange(time_t start, time_t end);

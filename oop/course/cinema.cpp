@@ -34,3 +34,35 @@ std::vector<Session> Cinema::getActiveSessions() const {
 std::vector<Session> Cinema::getAllSessions() const {
     return sessions;
 }
+
+void Cinema::serialize(std::string path) const {
+    auto out = std::ofstream();
+    out.open(path);
+    for (auto session: sessions) {
+        out << session.getSessionNumber() << " "
+            << session.getHallNumber() << " "
+            << session.getTicketPrice() << " "
+            << session.getTimeRange().start << " "
+            << session.getTimeRange().end << " "
+            << session.getMovieName() << "\n";
+    }
+    out.close();
+}
+
+void Cinema::deserialize(std::string path) {
+    auto in = std::ifstream();
+    in.open(path);
+    auto line = std::string();
+    sessions.clear();  
+    while(!in.fail()) {
+        int sessionNumber, hallNumber;
+        std::string movieName;
+        double ticketPrice;
+        long long start, end;
+        in >> sessionNumber >> hallNumber >> ticketPrice >> start >> end >> movieName;
+        sessions.push_back(
+            Session(sessionNumber, hallNumber, movieName, ticketPrice, TimeRange(start, end))
+        );
+    }
+    in.close();
+}
