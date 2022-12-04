@@ -5,3 +5,4 @@
 - [x] Lab 3 - loops and conditionals
 - [x] Lab 4 - logical operators
 - [x] Individual_1 - arithmetic operations and arrays
+- [ ] Lab 5 - strings
