@@ -28,7 +28,7 @@
 #include <iostream>
 #include "cinema.hpp"
 
-const int HOUR = 1'000 * 60 * 60;
+const int HOUR = 60 * 60;
 
 void init(Cinema &cinema);
 void showMenu();
