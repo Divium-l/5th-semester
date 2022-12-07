@@ -3,7 +3,7 @@
 
 2. ! Работа программы осуществляется с помощью главного меню.
 
-3. Предусмотреть ввод элементов класса, производить проверку корректности ввода
+3. + Предусмотреть ввод элементов класса, производить проверку корректности ввода
 
 4. + Предусмотреть сохранение введенных данных заданной структуры в файл, а также считывание данных из файла.
 
@@ -46,52 +46,60 @@ enum Option {
 };
 
 // utils
-int inputInt() {
+void clearCin() {
+    std::cin.clear();
+    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+}
+
+int inputInt(std::string message = "") {
     int num;
 
+    std::cout << message << " ";
     while (!(std::cin >> num)) {
-        std::cin.clear();
-        std::cin.ignore();
+        clearCin();
         std::cout << "Incorrect input. Please try again." << std::endl;
+        std::cout << message << " ";
     }
+    clearCin();
 
     return num; 
 }
 
-double inputDouble() {
+double inputDouble(std::string message = "") {
     double num;
 
+    std::cout << message << " ";
     while (!(std::cin >> num)) {
-        std::cin.clear();
-        std::cin.ignore();
+        clearCin();
         std::cout << "Incorrect input. Please try again." << std::endl;
+        std::cout << message << " ";
     }
+    clearCin();
 
     return num; 
 }
 
-std::string inputString() {
+std::string inputString(std::string message = "") {
     std::string str;
 
-    while (!(std::cin >> str)) {
-        std::cin.clear();
-        std::cin.ignore();
-        std::cout << "Incorrect input. Please try again." << std::endl;
-    }
+    std::cout << message << " ";
+    std::getline(std::cin, str);
 
     return str; 
 }
 
-time_t inputTime() {
-    time_t num;
+time_t inputTime(std::string message = "") {
+    std::tm tm;
 
-    while (!(std::cin >> num)) {
+    std::cout << message << " ";
+    while (!(std::cin >> std::get_time(&tm, "%d.%m.%Y %H:%M:%S"))) {
         std::cin.clear();
         std::cin.ignore();
-        std::cout << "Incorrect input. Please try again." << std::endl;
+        std::cout << "Incorrect input. Use this format - %d.%m.%y %H:%M:%S (e.g. 14.07.22 13:46:58)." << std::endl;
+        std::cout << message << " ";
     }
 
-    return num; 
+    return mktime(&tm); 
 }
 
 void printSessions(std::vector<Session> &sessions);
@@ -128,32 +136,32 @@ void find(Cinema &cinema) {
 
         switch (option) {
             case Option::SESSION_NUMBER: {
-                auto sessionNumber = inputInt();
+                auto sessionNumber = inputInt("Session number:");
                 foundSessions = cinema.findBySessionNumber(sessionNumber);
                 break;
             }
             case Option::HALL_NUMBER: {
-                auto hallNumber = inputInt();
+                auto hallNumber = inputInt("Hall number:");
                 foundSessions = cinema.findByHallNumber(hallNumber);
                 break;
             }
             case Option::MOVIE_NAME: {
-                auto movieName = inputString();
+                auto movieName = inputString("Movie name:");
                 foundSessions = cinema.findByMovieName(movieName);
                 break;
             }
             case Option::TICKET_PRICE: {
-                auto ticketPrice = inputDouble();
+                auto ticketPrice = inputDouble("Ticket price:");
                 foundSessions = cinema.findByTicketPrice(ticketPrice);
                 break;
             }
             case Option::START_TIME: {
-                auto start = inputTime();
+                auto start = inputTime("Start time:");
                 foundSessions = cinema.findByStartTime(start);
                 break;
             }
             case Option::END_TIME: {
-                auto end = inputTime();
+                auto end = inputTime("End time:");
                 foundSessions = cinema.findByEndTime(end);
                 break;
             }
@@ -335,23 +343,12 @@ void addElement(Cinema &cinema) {
     double ticketPrice;
     time_t start, end;
 
-    std::cout << "Session number: ";
-    std::cin >> sessionNumber;
-
-    std::cout << "Hall number: ";
-    std::cin >> hallNumber;
-
-    std::cout << "Movie name: ";
-    std::cin >> movieName;
-
-    std::cout << "Ticket price: ";
-    std::cin >> ticketPrice;
-
-    std::cout << "Time start: ";
-    std::cin >> start;
-
-    std::cout << "Time end: ";
-    std::cin >> end;
+    sessionNumber = inputInt("Session number:");
+    hallNumber = inputInt("Hall number:");
+    movieName = inputString("Movie name:");
+    ticketPrice = inputDouble("Ticket price:");
+    start = inputTime("Start time:");
+    end = inputTime("End time:");
 
     cinema.addSession(Session(sessionNumber, hallNumber, movieName, ticketPrice, TimeRange(start, end)));
 }
