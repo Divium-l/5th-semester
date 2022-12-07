@@ -63,6 +63,7 @@ void Cinema::deserialize(std::string path) {
         sessions.push_back(
             Session(sessionNumber, hallNumber, movieName, ticketPrice, TimeRange(start, end))
         );
+        sessions.erase(sessions.end() - 1);
     }
     in.close();
 }

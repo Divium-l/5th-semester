@@ -7,6 +7,7 @@ void init(Cinema &cinema);
 void showMenu();
 void showAll(Cinema &cinema);
 void showActive(Cinema &cinema);
+void addElement(Cinema &cinema);
 void serialize(Cinema &cinema);
 void deserialize(Cinema &cinema);
 
@@ -28,7 +29,7 @@ int main(int argc, char** argv) {
                 showActive(cinema);
                 break;
             case '3':
-                //add
+                addElement(cinema);
                 break;
             case '4':
                 serialize(cinema);
@@ -79,6 +80,33 @@ void showActive(Cinema &cinema) {
     std::cout << "Active sessions:" << std::endl;
     for (Session session : cinema.getActiveSessions()) 
         std::cout << session.toString() << std::endl;
+}
+
+void addElement(Cinema &cinema) {
+    int sessionNumber, hallNumber;
+    std::string movieName;
+    double ticketPrice;
+    time_t start, end;
+
+    std::cout << "Session number: ";
+    std::cin >> sessionNumber;
+
+    std::cout << "Hall number: ";
+    std::cin >> hallNumber;
+
+    std::cout << "Movie name: ";
+    std::cin >> movieName;
+
+    std::cout << "Ticket price: ";
+    std::cin >> ticketPrice;
+
+    std::cout << "Time start: ";
+    std::cin >> start;
+
+    std::cout << "Time end: ";
+    std::cin >> end;
+
+    cinema.addSession(Session(sessionNumber, hallNumber, movieName, ticketPrice, TimeRange(start, end)));
 }
 
 void serialize(Cinema &cinema) {
