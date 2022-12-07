@@ -1,21 +1,24 @@
-OBJECTS = main.o cinema.o session.o time_range.o
-CC = g++
-CFLAGS = -std=c++2a
+NAME = output
 
-all: $(OBJECTS)
-	$(CC) $(OBJECTS) -o output
+CC = g++ 
 
-main.o: main.cpp
-	$(CC) $(CFLAGS) -c main.cpp
+CFLAGS = -std=c++2a -Wall -Wextra -Werror -Wno-unknown-pragmas
 
-cinema.o: cinema.hpp cinema.cpp
-	$(CC) $(CFLAGS) -c cinema.cpp
+SRCS = main.cpp cinema.cpp session.cpp time_range.cpp
 
-session.o: session.hpp session.cpp
-	$(CC) $(CFLAGS) -c session.cpp
+HEAD = cinema.hpp session.hpp time_range.hpp
 
-time_range.o: time_range.hpp time_range.cpp
-	$(CC) $(CFLAGS) -c time_range.cpp
+OBJS = $(SRCS:.c = .o)
 
-clean:
-	rm *.o output
+$(NAME) : $(OBJS) $(HEAD)
+		$(CC) $(CFLAGS) $(OBJS) -o $(NAME)
+
+%.cpp:%.o 
+	$(CC) -c $< -o $@
+
+all: $(NAME)
+
+clean: 
+	rm -rf $(NAME)
+
+re: clean all
