@@ -9,8 +9,10 @@ section .data
     ; s - string
     ; e - equal
     ; n - not
-    mse: db "String are equal", 0
-    msne: db "String aren't equal. Difference at symbol ", 0
+    mse: db "Strings are equal", 0
+    msne: db "Strings aren't equal. Difference at symbol ", 0
+    msle: db "Strings' length are equal", 0
+    mslne: db "Strings' length are not equal", 0
     message: db "Input string:", 0
     str1: db "aaa", 0
     str2: db "baa", 0
@@ -23,6 +25,8 @@ CMAIN:
     ;write your code here
     xor eax, eax
     ; task 1
+    call COMPARE_STRINGS
+    ; task 2
     call COMPARE_STRINGS_LENGTH
     ret
 
@@ -59,14 +63,25 @@ COMPARE_STRINGS:
     
 COMPARE_STRINGS_LENGTH:
     call INPUT_STRINGS
-    ; reset df flag
+    
     mov al, 0
+    
     mov ecx, buffer_size
-    ; repeat while ecx != 0 and ZF != 0
+    repne scasb ; repeat while ecx != 0 and ZF != 0
+    mov ebx, ecx
+    
+    mov ecx, buffer_size
+    mov edi, esi
     repne scasb
-    mov ebx, buffer_size
-    sub ebx, ecx
-    ; ???????????
-    sub ebx, 2
-    PRINT_DEC 4, ebx
+    
+    cmp ebx, ecx
+    jz equal_length
+    jmp not_equal_length
+    equal_length:
+        PRINT_STRING msle
+        jmp cmp_strlen_exit
+    not_equal_length:
+        PRINT_STRING mslne
+    
+    cmp_strlen_exit:
     ret
