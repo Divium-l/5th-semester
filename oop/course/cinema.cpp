@@ -165,6 +165,10 @@ std::vector<Session> Cinema::getAllSessions() const {
     return sessions;
 }
 
+std::vector<Session> &Cinema::getAllSessionsRef() {
+    return sessions;
+}
+
 void Cinema::serialize(std::string path) const {
     auto out = std::ofstream();
     out.open(path);
@@ -178,7 +182,7 @@ void Cinema::serialize(std::string path) const {
     }
     out.close();
 }
-
+#include <iostream>
 void Cinema::deserialize(std::string path) {
     auto in = std::ifstream();
     in.open(path);
@@ -193,7 +197,7 @@ void Cinema::deserialize(std::string path) {
         sessions.push_back(
             Session(sessionNumber, hallNumber, movieName, ticketPrice, TimeRange(start, end))
         );
-        sessions.erase(sessions.end() - 1);
     }
+    sessions.erase(sessions.end() - 1);
     in.close();
 }

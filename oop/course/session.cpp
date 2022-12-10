@@ -29,6 +29,8 @@ void Session::setHallNumber(const int hallNumber) { this->hallNumber = hallNumbe
 void Session::setMovieName(const std::string &movieName) { this->movieName = movieName; }
 void Session::setTicketPrice(const double ticketPrice) { this->ticketPrice = ticketPrice; }
 void Session::setTimeRange(const TimeRange &sessionTime) { this->sessionTime = sessionTime; }
+void Session::setTimeStart(const time_t start) { this->sessionTime.start = start; }
+void Session::setTimeEnd(const time_t end) { this->sessionTime.end = end; }
 
 int Session::getSessionNumber() const { return sessionNumber; }
 int Session::getHallNumber() const { return hallNumber; }

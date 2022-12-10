@@ -34,6 +34,7 @@ public:
 
     std::vector<Session> getActiveSessions() const;
     std::vector<Session> getAllSessions() const;
+    std::vector<Session> &getAllSessionsRef();
 
     void serialize(std::string path) const;
     void deserialize(std::string path);

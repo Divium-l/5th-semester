@@ -30,4 +30,6 @@ public:
     void setMovieName(const std::string &moviName);
     void setTicketPrice(const double ticketPrice);
     void setTimeRange(const TimeRange &sessionTime);
+    void setTimeStart(const time_t end);
+    void setTimeEnd(const time_t start);
 };
