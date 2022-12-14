@@ -193,7 +193,8 @@ void Cinema::deserialize(std::string path) {
         std::string movieName;
         double ticketPrice;
         long long start, end;
-        in >> sessionNumber >> hallNumber >> ticketPrice >> start >> end >> movieName;
+        in >> sessionNumber >> hallNumber >> ticketPrice >> start >> end;
+        std::getline(in >> std::ws, movieName);
         sessions.push_back(
             Session(sessionNumber, hallNumber, movieName, ticketPrice, TimeRange(start, end))
         );
