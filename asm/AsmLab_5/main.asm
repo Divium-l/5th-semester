@@ -54,6 +54,7 @@ COMPARE_STRINGS:
     mov ebx, buffer_size
     sub ebx, ecx
     PRINT_DEC 4, ebx
+    NEWLINE
     jmp cmp_str_exit
     str_eq:
         PRINT_STRING mse
